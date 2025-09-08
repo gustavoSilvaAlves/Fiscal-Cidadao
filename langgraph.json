@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "default": "src.agent.core:agent_executor"
+  }
+}
+

@@ -1,0 +1,8 @@
+# Ignora arquivos de ambiente local
+.env
+.DS_Store # Mac users
+
+# Ignora pastas de cache e ambiente virtual
+__pycache__/
+venv/
+main_teste.py
