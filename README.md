@@ -1,4 +1,4 @@
-# 🇧🇷 Fiscal Cidadão
+#Fiscal Cidadão
 
 Este é um projeto de um agente de IA especializado em buscar informações sobre deputados e atividades parlamentares na Câmara dos Deputados do Brasil.
 
