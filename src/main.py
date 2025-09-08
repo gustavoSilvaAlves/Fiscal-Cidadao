@@ -1,14 +1,11 @@
-# src/main_teste.py
-
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import Optional
 import uuid
 
-# Importa o agente que definimos em `src/agent/core.py`
+
 from .agent.core import agent_executor
 
-# Cria a instância da sua aplicação FastAPI
+
 app = FastAPI(
     title="Fiscal Cidadão API",
     description="API para monitoramento de atividades parlamentares.",
@@ -16,19 +13,19 @@ app = FastAPI(
 )
 
 
-# Define o modelo Pydantic para a requisição de chat
+
 class ChatRequest(BaseModel):
     query: str
     conversation_id: str
 
 
-# Define o modelo de resposta para o endpoint /chat
+
 class ChatResponse(BaseModel):
     response: str
-    conversation_id: str  # Adicionaremos o ID na resposta para o cliente saber o ID da conversa
+    conversation_id: str
 
 
-# Define o modelo de resposta para o endpoint /start_chat
+
 class StartChatResponse(BaseModel):
     conversation_id: str
 
@@ -53,8 +50,6 @@ async def chat_with_agent(request: ChatRequest):
     """
     Endpoint principal para interagir com o agente. Requer um conversation_id.
     """
-    # Para esta fase de testes, o conversation_id ainda não é usado para memória.
-    # Ele será essencial quando integrarmos o Redis.
 
     response = await agent_executor.ainvoke({"messages": [("human", request.query)]})
 
