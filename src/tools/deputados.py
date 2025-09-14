@@ -1,25 +1,13 @@
 import httpx
-from typing import Optional
+from src.config import BASE_URL
 
-BASE_URL = "https://dadosabertos.camara.leg.br/api/v2"
-
-
-async def listar_deputados(
-        nome: str = None,
-        siglaUf: str = None,
-        siglaPartido: str = None,
-        itens: int = 10
-) -> str:
+async def listar_deputados(nome: str = None, siglaUf: str = None, siglaPartido: str = None, itens: int = 10) -> str:
     """
     Lista deputados em exercício, podendo filtrar por nome, estado (siglaUf), ou partido (siglaPartido).
     """
-    params = {
-        "nome": nome,
-        "siglaUf": siglaUf,
-        "siglaPartido": siglaPartido,
-        "itens": itens
-    }
-    params = {k: v for k, v in params.items() if v is not None}
+    params = {k: v for k, v in {
+        "nome": nome, "siglaUf": siglaUf, "siglaPartido": siglaPartido, "itens": itens
+    }.items() if v is not None}
 
     async with httpx.AsyncClient() as client:
         resp = await client.get(f"{BASE_URL}/deputados", params=params, headers={"Accept": "application/json"})
@@ -37,18 +25,18 @@ async def listar_deputados(
     resultado = ["Foram encontrados vários deputados. Escolha o ID para ver detalhes:"]
     for d in data:
         resultado.append(f"ID: {d['id']} - Nome: {d['nome']} ({d['siglaPartido']}-{d['siglaUf']})")
-
     return "\n".join(resultado)
 
 
 async def detalhar_deputado(id: int) -> str:
+
     """
     Busca informações detalhadas de um deputado específico pelo ID.
     Retorna nome completo, CPF, data de nascimento, escolaridade e partido.
     """
+
     async with httpx.AsyncClient() as client:
         resp = await client.get(f"{BASE_URL}/deputados/{id}", headers={"Accept": "application/json"})
-
     if resp.status_code != 200:
         return f"Erro ao buscar detalhes do deputado: {resp.status_code}"
 
@@ -74,55 +62,4 @@ async def detalhar_deputado(id: int) -> str:
         f"Andar do Gabinete: {gabinete_info.get('andar')}\n"
         f"Redes Sociais:\n{redes_sociais_str}"
     )
-
     return detalhes
-
-
-async def buscar_gastos_parlamentares(
-        id: int,
-        ano: Optional[int] = None,
-        mes: Optional[int] = None,
-        itens: int = 100
-) -> str:
-    """
-    Busca os gastos da cota parlamentar (CEAP) de um deputado.
-    Pode ser filtrada por ano e mês.
-    Retorna uma lista resumida das despesas mais recentes.
-    """
-    params = {
-        "ano": ano,
-        "mes": mes,
-        "itens": itens,
-        "ordenarPor": "dataDocumento",
-        "ordem": "desc"
-    }
-    params = {k: v for k, v in params.items() if v is not None}
-
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(
-            f"{BASE_URL}/deputados/{id}/despesas",
-            params=params,
-            headers={"Accept": "application/json"}
-        )
-
-    if resp.status_code != 200:
-        return f"Erro ao buscar cota parlamentar: {resp.status_code}"
-
-    data = resp.json().get("dados", [])
-    if not data:
-        return "Nenhum gasto de cota parlamentar encontrado para o período."
-
-    resultado = [f"Gastos de Cota Parlamentar para o Deputado (ID: {id}):"]
-    for despesa in data:
-        tipo_despesa = despesa.get('tipoDespesa', "Não encontrado o tipo da despesa")
-        valor = despesa.get('valorLiquido', 0.0)
-        documento = despesa.get('tipoDocumento', 'Não informado')
-        fornecedor = despesa.get('nomeFornecedor', 'Não informado')
-        data_doc = despesa.get('dataDocumento', 'Não informado')
-        link_nota = despesa.get('urlDocumento', 'Não encontrei o link de download da Nota fiscal')
-
-        resultado.append(
-            f"| Tipo de despesa: {tipo_despesa} | Tipo de documento: {documento} | Fornecedor: {fornecedor} | Valor: R${valor:,.2f} | Data: {data_doc} | Link da nota fiscal: {link_nota}"
-        )
-
-    return "\n".join(resultado)

@@ -5,13 +5,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-from .tools import listar_deputados, detalhar_deputado, buscar_gastos_parlamentares
+from src.tools import listar_deputados, detalhar_deputado, buscar_gastos_parlamentares, cadastrar_deputado_monitoramento, listar_deputados_monitoramento
 
 
 tools = [
     listar_deputados,
     detalhar_deputado,
-    buscar_gastos_parlamentares
+    buscar_gastos_parlamentares,
+    cadastrar_deputado_monitoramento,
+    listar_deputados_monitoramento
 ]
 
 

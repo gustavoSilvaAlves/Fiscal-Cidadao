@@ -4,3 +4,5 @@
 __pycache__/
 venv/
 main_teste.py
+
+*.pyc

@@ -1,0 +1,3 @@
+from .deputados import listar_deputados, detalhar_deputado
+from .gastos import buscar_gastos_parlamentares
+from .monitoramento import cadastrar_deputado_monitoramento, listar_deputados_monitoramento
