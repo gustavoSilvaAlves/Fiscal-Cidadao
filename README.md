@@ -4,6 +4,7 @@
 ![LangChain](https://img.shields.io/badge/LangChain-blue?logo=langchain)
 ![LangGraph](https://img.shields.io/badge/LangGraph-orange?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik00IDdoMnYxMEg0em0zIDBoMnYxMEg3em0zIDBoMnYxMEgxMHptMyAwaDJ2MTBIMTN6bTggMi42OThsLTIuNzk4IDIuNzk3bC0xLjQxNC0xLjQxNEwxOC4xNzIgMTBMMTYuNTggOC40MTNsMS40MTQtMS40MTRaTTIgN2gxNHYxMEgyek0xIDV2MTRoMTZWNWEyIDIgMCAwIDAtMi0ySDNBMiAyIDAgMCAwIDEgNSIvPjwvc3ZnPg==)
 ![Evolution API](https://img.shields.io/badge/EvolutionAPI-purple?logo=whatsapp)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)
 
 Este é um projeto de um agente de IA especializado em buscar informações sobre deputados e atividades parlamentares na Câmara dos Deputados do Brasil.
 
@@ -19,6 +20,8 @@ O agente utiliza a API de Dados Abertos da Câmara e é construído com a biblio
 - **LangGraph**: Framework para construir agentes robustos e com estado.
 - **LangChain**: Integração com LLMs e ferramentas.
 - **FastAPI**: Servidor web para expor o agente como uma API.
+- **EvolutionAPI**: Solução para acessar a api do WhatsApp de forma gratuita.
+- **Docker**: Containerização da aplicação e fácil instalação de dependências externas, como o EvolutionAPI.
 - **Dotenv**: Gerenciamento de variáveis de ambiente.
 - **Pipenv**: Gerenciamento de dependências.
 
